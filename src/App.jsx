@@ -46,7 +46,6 @@ const App = () => {
 
   const addTodo = useCallback(
     (text) => {
-      console.log("me ejectue addTodo");
       setTodos([...todos, { id: todos.length + 1, text, completed: false }]);
     },
     [todos]
@@ -61,7 +60,6 @@ const App = () => {
 
   const updateTodo = useCallback(
     (item) => {
-      console.log("updateTodo at App: ", item);
       setTodos(todos.map((todo) => (todo.id === item.id ? item : todo)));
     },
     [todos]
