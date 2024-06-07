@@ -3,7 +3,7 @@ import { AddTodo } from "./components/AddTodo";
 import { Navbar } from "./components/Navbar";
 import { TodoList } from "./components/TodoList";
 import { UserProfile } from "./components/UserProfile";
-import './App.css';
+import "./App.css";
 
 const userSample = {
   name: "Mike Tyson",
@@ -75,10 +75,7 @@ const App = () => {
   return (
     <div className="container">
       <div className="todo-app">
-        <div className="app-title">
-          {user && <Navbar user={user} onLogout={logout} />}
-          {user && <UserProfile user={user} />}
-        </div>
+        <Header user={user} logout={logout} />
         <div class="row">
           <AddTodo onAdd={addTodo} />
         </div>
@@ -102,3 +99,11 @@ const App = () => {
 };
 
 export default App;
+export const Header = ({ user, logout }) => {
+  return (
+    <div className="app-title">
+      {user && <Navbar user={user} onLogout={logout} />}
+      {user && <UserProfile user={user} />}
+    </div>
+  );
+};
