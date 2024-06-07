@@ -42,7 +42,7 @@ const App = () => {
   const addTodo = useCallback(
     (text) => {
       console.log("me ejectue addTodo");
-      setTodos([...todos, { id: Date.now(), text, completed: false }]);
+      setTodos([...todos, { id: todos.length + 1, text, completed: false }]);
     },
     [todos]
   );
@@ -54,14 +54,10 @@ const App = () => {
     [setTodos]
   );
 
-  const toggleTodo = useCallback(
-    (id) => {
-      console.log("me ejectue toggleTodo");
-      setTodos(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, isEditable: true } : todo
-        )
-      );
+  const updateTodo = useCallback(
+    (item) => {
+      console.log("me ejectue toggleTodo: ", JSON.stringify(item));
+      setTodos(todos.map((todo) => (todo.id === item.id ? item : todo)));
     },
     [todos]
   );
@@ -81,13 +77,13 @@ const App = () => {
     <div className="container">
       <div className="todo-app">
         <Header user={user} logout={logout} />
-        <div class="row">
+        <div className="row">
           <AddTodo onAdd={addTodo} />
         </div>
         <TodoList
           onAdd={addTodo}
           todos={filteredTodos}
-          onToggle={toggleTodo}
+          updateTodo={updateTodo}
           removeTodo={removeTodo}
         />
         <button className="all" onClick={() => setFilter("all")}>

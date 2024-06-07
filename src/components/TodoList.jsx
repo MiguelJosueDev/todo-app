@@ -1,39 +1,53 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@nextui-org/react";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Import the faPenToSquare icon
-import React, { useState } from "react";
+import { faPenToSquare, faSave } from "@fortawesome/free-solid-svg-icons";
 
-export const TodoList = ({ todos, onToggle, removeTodo, onAdd }) => {
-  const [text, setText] = useState(todos.text);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAdd(text);
-    setText("");
-  };
-
+export const TodoList = ({ todos, removeTodo, updateTodo }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <ul className={todos.completed ? "checked" : ""}>
-        {todos.map((todo) => (
-          <React.Fragment key={todo.id}>
-            {!todo.isEditable ? (
-              <>
-                <li
-                  className={todo.completed ? "checked" : ""}
-                  onClick={() => onToggle(todo.id)}
-                >
-                  {todo.text}
-                  {/* <span onClick={() => removeTodo(todo.id)}>x</span> */}
-                </li>
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </>
-            ) : (
-              <Input value={text} onChange={(e) => setText(e.target.value)} />
-            )}
-          </React.Fragment>
-        ))}
-      </ul>
-    </form>
+    <ul className={todos.completed ? "checked" : ""}>
+      {todos.map((todo) => (
+        <React.Fragment key={todo.id}>
+          {!todo.isEditable ? (
+            <ListItem todo={todo} updateTodo={updateTodo} />
+          ) : (
+            <InputItemList todo={todo} updateTodo={updateTodo} />
+          )}
+        </React.Fragment>
+      ))}
+    </ul>
   );
+};
+
+export const ListItem = ({ todo, updateTodo }) => {
+  return (
+    <>
+      <li
+        className={todo.completed ? "checked" : ""}
+        onClick={() => updateTodo({ ...todo, completed: !todo.completed })}
+      >
+        {todo.text}
+        {/* <span onClick={() => removeTodo(todo.id)}>x</span> */}
+      </li>
+      <FontAwesomeIcon
+        icon={faPenToSquare}
+        onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}
+      />
+    </>
+  );
+};
+
+export const InputItemList = ({ todo, updateTodo }) => {
+  const [text, setText] = useState(todo.text);
+
+  <>
+    <Input
+      value={text}
+      onChangeValue={(e) => console.log(setText(e.target.value))}
+    />
+    <FontAwesomeIcon
+      icon={faSave}
+      onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}
+    />
+  </>;
 };
