@@ -11,11 +11,21 @@ const userSample = {
 };
 
 const tasks = [
-  { id: 1, text: "Learn React", completed: false },
-  { id: 2, text: "Build a Todo App", completed: true },
-  { id: 3, text: "Read JavaScript Documentation", completed: false },
-  { id: 4, text: "Implement a Redux Store", completed: false },
-  { id: 5, text: "Write Unit Tests", completed: true },
+  { id: 1, text: "Learn React", completed: false, isEditable: false },
+  { id: 2, text: "Build a Todo App", completed: true, isEditable: false },
+  {
+    id: 3,
+    text: "Read JavaScript Documentation",
+    completed: false,
+    isEditable: false,
+  },
+  {
+    id: 4,
+    text: "Implement a Redux Store",
+    completed: false,
+    isEditable: false,
+  },
+  { id: 5, text: "Write Unit Tests", completed: true, isEditable: false },
 ];
 
 const App = () => {
@@ -39,22 +49,17 @@ const App = () => {
 
   const removeTodo = useCallback(
     (id) => {
-      console.log("me ejectue removeTodo");
-      const newArray = todos.filter((todo) => todo.id !== id);
-      setTodos(newArray);
-      console.log(newArray);
+      setTodos((c) => c.filter((todo) => todo.id !== id));
     },
-    [todos]
+    [setTodos]
   );
-
-  const editTodo = useCallback();
 
   const toggleTodo = useCallback(
     (id) => {
       console.log("me ejectue toggleTodo");
       setTodos(
         todos.map((todo) =>
-          todo.id === id ? { ...todo, completed: !todo.completed } : todo
+          todo.id === id ? { ...todo, isEditable: true } : todo
         )
       );
     },
@@ -80,6 +85,7 @@ const App = () => {
           <AddTodo onAdd={addTodo} />
         </div>
         <TodoList
+          onAdd={addTodo}
           todos={filteredTodos}
           onToggle={toggleTodo}
           removeTodo={removeTodo}
@@ -99,6 +105,7 @@ const App = () => {
 };
 
 export default App;
+
 export const Header = ({ user, logout }) => {
   return (
     <div className="app-title">
