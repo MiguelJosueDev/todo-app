@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Input } from "@nextui-org/react";
-import { faPenToSquare, faSave } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPenToSquare,
+  faSave,
+  faSquareMinus,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const TodoList = ({ todos, removeTodo, updateTodo }) => {
   return (
@@ -9,7 +13,11 @@ export const TodoList = ({ todos, removeTodo, updateTodo }) => {
       {todos.map((todo) => (
         <React.Fragment key={todo.id}>
           {!todo.isEditable ? (
-            <ListItem todo={todo} updateTodo={updateTodo} />
+            <ListItem
+              todo={todo}
+              updateTodo={updateTodo}
+              removeTodo={removeTodo}
+            />
           ) : (
             <InputItemList todo={todo} updateTodo={updateTodo} />
           )}
@@ -19,7 +27,7 @@ export const TodoList = ({ todos, removeTodo, updateTodo }) => {
   );
 };
 
-export const ListItem = ({ todo, updateTodo }) => {
+export const ListItem = ({ todo, updateTodo, removeTodo }) => {
   return (
     <>
       <li
@@ -27,8 +35,11 @@ export const ListItem = ({ todo, updateTodo }) => {
         onClick={() => updateTodo({ ...todo, completed: !todo.completed })}
       >
         {todo.text}
-        {/* <span onClick={() => removeTodo(todo.id)}>x</span> */}
       </li>
+      <FontAwesomeIcon
+        icon={faSquareMinus}
+        onClick={() => removeTodo(todo.id)}
+      />
       <FontAwesomeIcon
         icon={faPenToSquare}
         onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}
@@ -41,10 +52,7 @@ export const InputItemList = ({ todo, updateTodo }) => {
   const [text, setText] = useState(todo.text);
 
   <>
-    <Input
-      value={text}
-      onChangeValue={(e) => console.log(setText(e.target.value))}
-    />
+    <Input value={text} onChangeValue={(e) => setText(e.target.value)} />
     <FontAwesomeIcon
       icon={faSave}
       onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}

@@ -26,6 +26,11 @@ const tasks = [
     isEditable: false,
   },
   { id: 5, text: "Write Unit Tests", completed: true, isEditable: false },
+  { id: 6, text: "Deploy App to Netlify", completed: false, isEditable: false },
+  { id: 7, text: "Publish App on GitHub", completed: false, isEditable: false },
+  { id: 8, text: "Share App on Twitter", completed: false, isEditable: false },
+  { id: 9, text: "Celebrate Success", completed: false, isEditable: false },
+  { id: 10, text: "Take a Nap", completed: false, isEditable: false },
 ];
 
 const App = () => {
@@ -56,7 +61,7 @@ const App = () => {
 
   const updateTodo = useCallback(
     (item) => {
-      console.log("me ejectue toggleTodo: ", JSON.stringify(item));
+      console.log("updateTodo at App: ", item);
       setTodos(todos.map((todo) => (todo.id === item.id ? item : todo)));
     },
     [todos]
