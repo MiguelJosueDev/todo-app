@@ -95,7 +95,7 @@ const App = () => {
         <button className="completed" onClick={() => setFilter("completed")}>
           Completed
         </button>
-        <button className="imcomplete" onClick={() => setFilter("incomplete")}>
+        <button className="incomplete" onClick={() => setFilter("incomplete")}>
           Incomplete
         </button>
       </div>

@@ -59,9 +59,19 @@ export const InputItemList = ({ todo, updateTodo }) => {
     });
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleUpdate();
+    }
+  };
+
   return (
     <>
-      <Input value={text} onChange={(e) => setText(e.target.value)} />
+      <Input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
       <FontAwesomeIcon icon={faSave} onClick={handleUpdate} />
     </>
   );
