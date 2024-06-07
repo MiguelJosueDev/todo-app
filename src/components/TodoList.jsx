@@ -51,11 +51,18 @@ export const ListItem = ({ todo, updateTodo, removeTodo }) => {
 export const InputItemList = ({ todo, updateTodo }) => {
   const [text, setText] = useState(todo.text);
 
-  <>
-    <Input value={text} onChangeValue={(e) => setText(e.target.value)} />
-    <FontAwesomeIcon
-      icon={faSave}
-      onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}
-    />
-  </>;
+  const handleUpdate = () => {
+    updateTodo({
+      ...todo,
+      text,
+      isEditable: !todo.isEditable,
+    });
+  };
+
+  return (
+    <>
+      <Input value={text} onChange={(e) => setText(e.target.value)} />
+      <FontAwesomeIcon icon={faSave} onClick={handleUpdate} />
+    </>
+  );
 };
