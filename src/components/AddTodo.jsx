@@ -4,7 +4,7 @@ export const AddTodo = ({ onAdd }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(text);
+    onAdd({ type: "add", text: text });
     setText("");
   };
 

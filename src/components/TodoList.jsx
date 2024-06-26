@@ -9,8 +9,8 @@ import {
 
 export const TodoList = ({ todos, removeTodo, updateTodo }) => {
   return (
-    <ul className={todos.completed ? "checked" : ""}>
-      {todos.map((todo) => (
+    <ul className={todos?.completed ? "checked" : ""}>
+      {todos?.map((todo) => (
         <React.Fragment key={todo.id}>
           {!todo.isEditable ? (
             <ListItem
@@ -31,18 +31,34 @@ export const ListItem = ({ todo, updateTodo, removeTodo }) => {
   return (
     <>
       <li
-        className={todo.completed ? "checked" : ""}
-        onClick={() => updateTodo({ ...todo, completed: !todo.completed })}
+        className={todo?.completed ? "checked" : ""}
+        onClick={() =>
+          updateTodo({
+            type: "update",
+            item: {
+              ...todo,
+              completed: !todo.completed,
+            },
+          })
+        }
       >
-        {todo.text}
+        {todo?.text}
       </li>
       <FontAwesomeIcon
         icon={faSquareMinus}
-        onClick={() => removeTodo(todo.id)}
+        onClick={() => removeTodo({ type: "remove", id: todo.id })}
       />
       <FontAwesomeIcon
         icon={faPenToSquare}
-        onClick={() => updateTodo({ ...todo, isEditable: !todo.isEditable })}
+        onClick={() =>
+          updateTodo({
+            type: "update",
+            item: {
+              ...todo,
+              isEditable: !todo.isEditable,
+            },
+          })
+        }
       />
     </>
   );
@@ -53,9 +69,12 @@ export const InputItemList = ({ todo, updateTodo }) => {
 
   const handleUpdate = () => {
     updateTodo({
-      ...todo,
-      text,
-      isEditable: !todo.isEditable,
+      type: "update",
+      item: {
+        ...todo,
+        text,
+        isEditable: !todo.isEditable,
+      },
     });
   };
 
